@@ -15,4 +15,5 @@ public:
     void apply();
     TabuSearch(Adjacency_Matrix graph, int time); // Constructor now takes Adjacency_Matrix
     ~TabuSearch();
+    std::vector<int> greedyPath();
 };
