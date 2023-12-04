@@ -5,13 +5,20 @@
 #include <ctime>
 #include <random>
 
+TabuSearch::TabuSearch(Adjacency_Matrix graph, int time)
+{
+    matrix = graph.getMatrix(); // Get the matrix from Adjacency_Matrix
+    size = graph.getNumVertices();    // Get the size (number of vertices)
+    searchTime = time;
+}
+
 void TabuSearch::apply()
 {
     vector<vector<int>> tabuMatrix;
     vector<int> best=greedyPath();
     vector<int> permutation = randomPermutation(size);
     vector<int> next(permutation);
-    int result = INT_MAX;
+    int result = calculatePath(best);
     int firstToSwap;
     int secondToSwap;
     int nextCost;
@@ -23,15 +30,16 @@ void TabuSearch::apply()
     {
         tabuMatrix[j].resize(size, 0);
     }
+    const double iterationTimeLimit = 30.0; // Limit czasu na iterację w sekundach
     start = std::clock();
     while(true)
     {
+        double iterationStart = std::clock(); // Początek iteracji
         for (int step = 0; step < 15 * size; ++step)
         {
             firstToSwap = 0;
             secondToSwap = 0;
             nextCost = INT_MAX;
-
             for (int first = 0; first < size; ++first)
             {
                 for (int second = first + 1; second < size; ++second)
@@ -56,9 +64,7 @@ void TabuSearch::apply()
                         }
                     }
                     std::swap(permutation[first], permutation[second]);
-
                     time = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-
                     if (time >= searchTime)
                     {
                         cout << "Droga: ";
@@ -74,6 +80,11 @@ void TabuSearch::apply()
             }
             permutation = next;
             tabuMatrix[firstToSwap][secondToSwap] += size;
+            double currentTime = (std::clock() - iterationStart) / (double)CLOCKS_PER_SEC;
+            if (currentTime >= iterationTimeLimit)
+            {
+                break; // Przerwanie obecnej iteracji, jeśli limit czasu został przekroczony
+            }
         }
         permutation = randomPermutation(size);
         for (auto &row : tabuMatrix)
@@ -108,17 +119,12 @@ int TabuSearch::calculatePath(std::vector<int> path)
     return cost;
 }
 
-TabuSearch::TabuSearch(Adjacency_Matrix graph, int time)
-{
-    matrix = graph.getMatrix(); // Get the matrix from Adjacency_Matrix
-    size = graph.getCount();    // Get the size (number of vertices)
-    searchTime = time;
-}
+
 std::vector<int> TabuSearch::greedyPath() {
     std::vector<int> path;
     std::vector<bool> visited(size, false);
     // Start from a random vertex
-    int current = 0;
+    int current = rand() % size;
     path.push_back(current);
     visited[current] = true;
     int totalCost = 0;

@@ -72,6 +72,6 @@ void Adjacency_Matrix::generate(int numberOfNodes){
 vector<vector<int>> Adjacency_Matrix::getMatrix() {
     return matrix;
 }
-int Adjacency_Matrix::getCount() {
+int Adjacency_Matrix::getNumVertices() {
     return liczbaWierzcholkow;
 }
