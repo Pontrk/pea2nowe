@@ -7,10 +7,9 @@
 int main() {
     Adjacency_Matrix graf;
     graf.loadFromFile("ftv55.atsp");
-    string dane;
+    string dane,wynik;
     int searchTime=5;
     srand(static_cast<unsigned int>(time(nullptr)));
-    // Create an instance of TabuSearch with the adjacency matrix and search time
     double coolingRate=0.99;
     int opcja;
     do {
@@ -20,8 +19,10 @@ int main() {
         cout << "2. Wyprowadz kryterium stopu" << endl;
         cout << "3. TabuSearch" << endl;
         cout << "4. Wprowadz wspolczynnik temperatury" << endl;
-        cout << "5. Algorytm Helda-Karpa "<< endl;
-        cout << "0. Zakoncz program" << endl;
+        cout << "5. Algorytm SimulatedAnnealing "<< endl;
+        cout << "6. Zapisz dane do pliku" << endl;
+        cout << "7. Wczytaj sciezke z pliku i oblicz koszt "<<endl;
+        cout << "0. Zakoncz program"<<endl;
         cin >> opcja;
         switch (opcja) {
             case 1: {
@@ -51,10 +52,15 @@ int main() {
             }
             case 6: {
                 sa.savePathToFile();
+                break;
+            }
+            case 7: {
+                cin >> wynik;
+                cout<<sa.calculatePath(sa.loadPathFromFile(wynik))<<endl;
+                break;
             }
         }
 
     } while (opcja != 0);
-
     return 0;
 }

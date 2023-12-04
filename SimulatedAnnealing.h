@@ -10,7 +10,8 @@ public:
     ~SimulatedAnnealing();
     void apply();
     void savePathToFile();
-
+    int calculatePath(std::vector<int> path);
+    std::vector<int> loadPathFromFile(const std::string& filename);
 private:
     std::vector<std::vector<int>> matrix;
     int size;
@@ -19,14 +20,9 @@ private:
     double temperatureBuffer;
     int numVertices;
     vector<int> best;
-
     std::vector<int> greedyPath();
     std::vector<int> random_permutation(int _size);
     double calculateTemperature();
-    int calculatePath(std::vector<int> path);
-    double getProbability(int diff, double temperature);
-
-
 };
 
 #endif // SIMULATED_ANNEALING_H
