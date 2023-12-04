@@ -9,7 +9,7 @@ public:
     SimulatedAnnealing(Adjacency_Matrix& graf, int time, double rate);
     ~SimulatedAnnealing();
     void apply();
-
+    void savePathToFile();
 
 private:
     std::vector<std::vector<int>> matrix;
@@ -18,12 +18,14 @@ private:
     double coolingRate;
     double temperatureBuffer;
     int numVertices;
+    vector<int> best;
 
     std::vector<int> greedyPath();
     std::vector<int> random_permutation(int _size);
     double calculateTemperature();
     int calculatePath(std::vector<int> path);
     double getProbability(int diff, double temperature);
+
 
 };
 

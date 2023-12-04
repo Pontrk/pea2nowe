@@ -6,13 +6,15 @@
 
 int main() {
     Adjacency_Matrix graf;
+    graf.loadFromFile("ftv55.atsp");
     string dane;
-    int searchTime=120;
+    int searchTime=5;
     srand(static_cast<unsigned int>(time(nullptr)));
     // Create an instance of TabuSearch with the adjacency matrix and search time
     double coolingRate=0.99;
     int opcja;
     do {
+        SimulatedAnnealing sa(graf, searchTime, coolingRate);
         cout << "Wybierz opcje:" << endl;
         cout << "1. Wczytaj dane z pliku" << endl;
         cout << "2. Wyprowadz kryterium stopu" << endl;
@@ -44,15 +46,11 @@ int main() {
                 break;
             }
             case 5: {
-                SimulatedAnnealing sa(graf, searchTime, coolingRate);
                 sa.apply();
                 break;
             }
             case 6: {
-                ofstream wyniki("wyniki.txt");
-                if(wyniki.is_open())
-                    cout<<"otwarto"<<endl;
-                wyniki.close();
+                sa.savePathToFile();
             }
         }
 

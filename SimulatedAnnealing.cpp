@@ -21,7 +21,7 @@ SimulatedAnnealing::SimulatedAnnealing(Adjacency_Matrix& graph, int time, double
 void SimulatedAnnealing::apply()
 {
     int numberOfIterations=10000;
-    vector<int> best = greedyPath();
+    best = greedyPath();
     vector<int> currentSolution = best;
     int bestCost = calculatePath(best);
     int currentCost=bestCost;
@@ -130,7 +130,7 @@ std::vector<int> SimulatedAnnealing::greedyPath() {
     std::vector<int> path;
     std::vector<bool> visited(size, false);
     // Start from a random vertex
-    int current = rand() % size;
+    int current = 0;
     path.push_back(current);
     visited[current] = true;
     int totalCost = 0;
@@ -162,6 +162,18 @@ std::vector<int> SimulatedAnnealing::greedyPath() {
     std::cout << "\nTotal Cost of Greedy Path: " << totalCost << std::endl;
     return path;
 }
+void SimulatedAnnealing::savePathToFile() {
+    std::ofstream file("wynikiSA.txt");
+    if (file.is_open()) {
+        for (int node : best) {
+            cout << node << " "; // Wypisanie każdego wierzchołka oddzielnie
+        }
+        file.close();
+    } else {
+        std::cerr << "Nie można otworzyć pliku do zapisu: wynikiSA.txt" << std::endl;
+    }
+}
+
 SimulatedAnnealing::~SimulatedAnnealing()
 {
 }

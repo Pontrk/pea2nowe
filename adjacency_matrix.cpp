@@ -30,7 +30,6 @@ void Adjacency_Matrix::loadFromFile(const string& filename){
         getline(plik,dump, ' ');
         opis.append(dump+"\n");
         plik >> liczbaWierzcholkow;
-        cout << liczbaWierzcholkow<<endl;
         getline(plik,dump);
         opis.append(dump+"\n");
         getline(plik,dump);
@@ -39,7 +38,6 @@ void Adjacency_Matrix::loadFromFile(const string& filename){
         opis.append(dump+"\n");
         getline(plik,dump);
         opis.append(dump+"\n");
-        cout<<opis;
         // Plik został otwarty pomyślnie, możesz kontynuować operacje na pliku.
         vector<int> wiersz;
         for (int j = 0; j < liczbaWierzcholkow; j++){
